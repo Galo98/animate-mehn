@@ -1,17 +1,31 @@
 const express = require('express')
+const { engine } = require('express-handlebars')
 
 require('dotenv').config()
-
 const app = express()
 
+app.engine('hbs', engine(
+    {
+        extname: '.hbs'
+    }
+))
+
+app.set('view engine', 'hbs')
+
+// Middleware
+
+app.use(express.static('public'))
+
 app.get('/', (req, res) => {
-    res.send('Landing page (PUBLICO)')
+    /* res.send('Landing page (PUBLICO)') */
+    res.render('index')
 })
 
 // Rutas de registro
 
 app.get('/registro', (req, res) => {
-    res.send('Registro de usuarios (PUBLICO)')
+    /* res.send('Registro de usuarios (PUBLICO)') */
+    res.render('registro/index', {title: ' | Registro'})
 })
 
 app.post('/registro', (req, res) => {
@@ -21,16 +35,19 @@ app.post('/registro', (req, res) => {
 // Rutas de blog
 
 app.get('/blog', (req, res) => {
-    res.send('Blog de noticias (PUBLICO)')
+    /* res.send('Blog de noticias (PUBLICO)') */
+    res.render('blog/index')
 })
 
 app.get('/blog/gestion', (req, res) => {
-    res.send('Gestion de blog, donde se puede modificar agregar o borrar noticias (PRIVADO)')
+    /* res.send('Gestion de blog, donde se puede modificar agregar o borrar noticias (PRIVADO)') */
+    res.render('blog/gestion')
 })
 
 /* ------ Crear noticia ------ */
 app.get('/blog/create', (req, res) => {
-    res.send('Muestra el formulario para crear nuevas noticias (PRIVADO)')
+    /* res.send('Muestra el formulario para crear nuevas noticias (PRIVADO)') */
+    res.render('blog/create')
 })
 
 app.post('/blog', (req, res) => {
@@ -39,7 +56,8 @@ app.post('/blog', (req, res) => {
 
 /* ------ Editar noticia ------ */
 app.get('/blog/edit', (req, res) => {
-    res.send('Muestra el formulario para editar noticias (PRIVADO)')
+    /* res.send('Muestra el formulario para editar noticias (PRIVADO)') */
+    res.render('blog/edit')
 })
 
 app.put('/blog/:id', (req, res) => {
