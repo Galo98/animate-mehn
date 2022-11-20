@@ -16,7 +16,8 @@ app.engine('hbs', engine(
 app.set('view engine', 'hbs')
 
 // Middlewares
-
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 app.use(express.static('public'))
 
 
