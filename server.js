@@ -1,5 +1,8 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const { engine } = require('express-handlebars')
+
+// Configuraciones
 
 require('dotenv').config()
 const app = express()
@@ -16,6 +19,22 @@ app.set('view engine', 'hbs')
 
 app.use(express.static('public'))
 
+
+const start = async () => {
+    try {
+        await mongoose.connect(process.env.URI_MONGO_ATLAS)
+        console.log(`Base de datos conectada`);
+        app.listen(process.env.PORT)
+        console.log(`Todo ok en el puerto: ${process.env.PORT}`)
+    } catch (err) {
+        console.log(`Tuvimos un problema: \n ${ err }`);
+    }
+    
+}
+
+start()
+
+/* --------------------------------- */
 // Rutas
 
 app.get('/', (req, res) => {
@@ -27,8 +46,4 @@ app.use('/blog', require('./routes/blog.routes'))
 app.use('/oportunidades', require('./routes/oportunidades.routes'))
 app.use('/registro', require('./routes/registro.routes'))
 
-const PORT = process.env.PORT
-    app.listen(PORT, (err) => {
-        if (err) throw new Error(`Tuvimos un problema ${err}`)
-        console.log(`Todo ok en el puerto: ${PORT}`)
-    })
+
