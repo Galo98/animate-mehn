@@ -147,6 +147,7 @@
     padding: 18px;
     width: 20vw;
     cursor: pointer;
+    font: var(--font-btn);
 }
 
 /* -- QUIENES SOMOS -- */
