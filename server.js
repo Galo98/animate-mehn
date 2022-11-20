@@ -12,7 +12,7 @@ app.engine('hbs', engine(
 
 app.set('view engine', 'hbs')
 
-// Middleware
+// Middlewares
 
 app.use(express.static('public'))
 
